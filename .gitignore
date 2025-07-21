@@ -1,0 +1,24 @@
+# Ignore Python cache
+__pycache__/
+*.pyc
+
+# Ignore virtual environments
+venv39/
+venv310/
+env/
+.venv/
+
+# Ignore VSCode or PyCharm config
+.vscode/
+.idea/
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Output files
+outputs/
+*.json
+
+# Data directory
+data/

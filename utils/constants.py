@@ -1,0 +1,16 @@
+JOINT_TRIPLETS = {
+    "Left Elbow": ["LEFT_SHOULDER", "LEFT_ELBOW", "LEFT_WRIST"],
+    "Right Elbow": ["RIGHT_SHOULDER", "RIGHT_ELBOW", "RIGHT_WRIST"],
+    "Left Knee": ["LEFT_HIP", "LEFT_KNEE", "LEFT_ANKLE"],
+    "Right Knee": ["RIGHT_HIP", "RIGHT_KNEE", "RIGHT_ANKLE"],
+    "Left Shoulder": ["LEFT_HIP", "LEFT_SHOULDER", "LEFT_ELBOW"],
+    "Right Shoulder": ["RIGHT_HIP", "RIGHT_SHOULDER", "RIGHT_ELBOW"],
+    "Left Hip": ["LEFT_SHOULDER", "LEFT_HIP", "LEFT_KNEE"],
+    "Right Hip": ["RIGHT_SHOULDER", "RIGHT_HIP", "RIGHT_KNEE"]
+}
+JOINTS = [
+    "LEFT_SHOULDER", "LEFT_ELBOW", "LEFT_WRIST",
+    "RIGHT_SHOULDER", "RIGHT_ELBOW", "RIGHT_WRIST",
+    "LEFT_HIP", "LEFT_KNEE", "LEFT_ANKLE",
+    "RIGHT_HIP", "RIGHT_KNEE", "RIGHT_ANKLE"
+]
