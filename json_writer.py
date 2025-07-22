@@ -1,34 +1,45 @@
 import json
-from datetime import datetime
 import os
 
 class JSONWriter:
-    def __init__(self, output_dir="outputs"):
+    def __init__(self, output_dir="outputs", filename="analysis.json"):
         self.output_dir = output_dir
+        self.filename = filename
+        self.filepath = os.path.join(self.output_dir, filename)
         os.makedirs(self.output_dir, exist_ok=True)
-        self.data = {
-            "exercise_name": "",
-            "date": datetime.now().strftime("%Y-%m-%d"),
-            "video_filename": "",
-            "captured_positions": []
-        }
+        self.data = self.load_data()
 
-    def set_metadata(self, exercise_name, video_filename):
-        self.data["exercise_name"] = exercise_name
-        self.data["video_filename"] = video_filename
+    def load_data(self):
+        """Loads existing JSON data from the file."""
+        if os.path.exists(self.filepath):
+            try:
+                with open(self.filepath, 'r') as f:
+                    # Handle empty file case
+                    content = f.read()
+                    if not content:
+                        return {}
+                    return json.loads(content)
+            except (json.JSONDecodeError, IOError):
+                # If file is corrupt or other IO error, start fresh
+                return {}
+        return {}
 
-    def add_position(self, position_type, frame_number, timestamp_ms, posture_desc, joint_angles, raw_landmarks):
-        self.data["captured_positions"].append({
-            "position_type": position_type,
-            "timestamp_ms": timestamp_ms,
-            "frame_number": frame_number,
-            "posture_description": posture_desc,
+    def add_pose(self, exercise_name, position_type, joint_angles, raw_landmarks):
+        """
+        Adds or updates a pose for a given exercise.
+        If the exercise or position exists, it will be overwritten.
+        """
+        if exercise_name not in self.data:
+            self.data[exercise_name] = {}
+
+        self.data[exercise_name][position_type] = {
             "joint_angles": joint_angles,
             "raw_landmarks": raw_landmarks
-        })
+        }
+        self.save()
 
-    def save(self, filename="analysis.json"):
-        filepath = os.path.join(self.output_dir, filename)
-        with open(filepath, 'w') as f:
+    def save(self):
+        """Saves the current data dictionary to the JSON file."""
+        with open(self.filepath, 'w') as f:
             json.dump(self.data, f, indent=4)
-        print(f"✅ Saved to {filepath}")
+        print(f"✅ Saved to {self.filepath}")
